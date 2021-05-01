@@ -5,6 +5,13 @@ from bs4 import BeautifulSoup
 from kurashi.utils import post
 
 
+requests.packages.urllib3.util.ssl_.DEFAULT_CIPHERS += 'HIGH:!DH:!aNULL'
+try:
+    requests.packages.urllib3.contrib.pyopenssl.DEFAULT_SSL_CIPHER_LIST += 'HIGH:!DH:!aNULL'
+except AttributeError:
+    pass
+
+
 @click.command('tepco', help='くらしTEPCOから利用料金を取得する')
 @click.option('--username', envvar='TEPCO_USERNAME', help='TEPCO_USERNAME')
 @click.option('--password', envvar='TEPCO_PASSWORD', help='TEPCO_PASSWORD')
