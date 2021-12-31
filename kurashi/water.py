@@ -18,7 +18,7 @@ def water(username, password, water_api_url, no_post):
         return
 
     session = requests.Session()
-    first = session.get('https://suidonet.waterworks.metro.tokyo.jp/inet-service/members/login')
+    first = session.get('https://suidonet.waterworks.metro.tokyo.lg.jp/inet-service/members/login')
     first.encoding = first.apparent_encoding
     html = BeautifulSoup(first.text, 'html.parser')
     token = html.find('input', {'name': 'wap_PageToken'})['value']
@@ -28,8 +28,8 @@ def water(username, password, water_api_url, no_post):
         'wap_PageToken': token,
     }
 
-    session.post('https://suidonet.waterworks.metro.tokyo.jp/inet-service/members/login', data=param)
-    notice = session.get('https://suidonet.waterworks.metro.tokyo.jp/inet-service/members/member_page/notice_of_consumption')
+    session.post('https://suidonet.waterworks.metro.tokyo.lg.jp/inet-service/members/login', data=param)
+    notice = session.get('https://suidonet.waterworks.metro.tokyo.lg.jp/inet-service/members/member_page/notice_of_consumption')
     html = BeautifulSoup(notice.text, 'html.parser')
     selected = html.find('option', selected=True).text
     date = selected.split('-')[1].replace('年', '/').replace('月分', '')
