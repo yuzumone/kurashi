@@ -19,7 +19,6 @@ def sbi(username, password, api, no_post):
     sesstion = requests.Session()
     res = sesstion.get('https://www.sbisec.co.jp/ETGate')
     html = BeautifulSoup(res.text, 'html.parser')
-    uuid = html.find('input', {'name': 'uuid'})['value']
 
     headers = {
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.110 Safari/537.36 Edg/96.0.1054.62',
@@ -43,7 +42,6 @@ def sbi(username, password, api, no_post):
         '_ReturnPageInfo': 'WPLEThmR001Control/DefaultPID/DefaultAID/DSWPLEThmR001Control',
         'user_id': username,
         'user_password': password,
-        'uuid': uuid,
     }
 
     res = sesstion.post('https://www.sbisec.co.jp/ETGate/', data=data, headers=headers)
@@ -84,7 +82,8 @@ def sbi(username, password, api, no_post):
         for row in t[1:]:
             td = row.find_all('td')
             name = td[1].find('a').text
-            value = td[5].text.replace(',', '')
+            value = td[10].text.replace(',', '')
             result.append(f'{now},{name},{value}')
+    click.echo(result)
     if not no_post:
         post(api, result)
