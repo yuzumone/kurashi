@@ -81,9 +81,16 @@ def sbi(username, password, api, no_post):
     for t in tables:
         for row in t[1:]:
             td = row.find_all('td')
+            type = ''
+            if '現買' in td[0].text:
+                type = '株'
+            elif '買付' in td[0].text:
+                type = '投資信託'
+            elif '積立' in td[0].text:
+                type = 'NISA'
             name = td[1].find('a').text
             value = td[10].text.replace(',', '')
-            result.append(f'{now},{name},{value}')
+            result.append(f'{now},{name},{type},{value}')
     click.echo(result)
     if not no_post:
         post(api, result)
