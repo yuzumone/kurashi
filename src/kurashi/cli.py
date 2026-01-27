@@ -1,16 +1,14 @@
 import click
 
-from kurashi.sbi import sbi
-from kurashi.zaim import zaim
+from kurashi.stock import stock
 
 
 @click.group(context_settings=dict(help_option_names=["-h", "--help"]))
-def main():
+def main() -> None:
     pass
 
 
-main.add_command(sbi)
-main.add_command(zaim)
+main.add_command(stock)
 
 
 if __name__ == "__main__":
