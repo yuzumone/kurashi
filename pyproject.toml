@@ -1,0 +1,35 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "kurashi"
+version = "0.0.1"
+description = "kurashi batch"
+readme = "README.md"
+urls = { code = "https://github.com/yuzumone/kurashi" }
+dependencies = [
+    "click",
+    "requests",
+    "beautifulsoup4",
+]
+requires-python = ">=3.9"
+
+[project.optional-dependencies]
+formatter = [
+    "isort",
+    "black",
+    "flake8",
+]
+dev = [
+    "tox",
+]
+
+[project.scripts]
+kurashi = "kurashi.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.black]
+line-length = 160
