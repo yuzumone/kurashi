@@ -71,7 +71,10 @@ def _get_finance(session: requests.Session, code: str) -> Optional[str]:
     soup = BeautifulSoup(res.text, "html.parser")
     script = soup.find("script", string=re.compile(r"window\.__PRELOADED_STATE__\s*="))
     if not script:
-        return None
+        value = soup.select_one("._CommonPriceBoard__price_1g7gt_64 > span:nth-child(1) > span:nth-child(1)")
+        if not value:
+            return None
+        return value.string.replace(",", "")
 
     m = pattern.search(script.string)
     if not m:
